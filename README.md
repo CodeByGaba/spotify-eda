@@ -1,2 +1,2 @@
 # spotify-eda
-Exploratory Data Analysis of Spotify music trends
+Exploratory Data Analysis and Churn Prediction for Spotify Users
