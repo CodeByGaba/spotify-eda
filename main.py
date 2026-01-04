@@ -30,11 +30,11 @@ churn_counts=df["churned"].value_counts()
 print(churn_counts)
 
 plt.figure(figsize=(6,4))
-plt.savefig("graph.png")
 sns.countplot(x='churned', data=df)
 plt.title('Churned vs Active Users')
 plt.xlabel('Churned (1 = Yes, 0 = No)')
 plt.ylabel('Number of Users')
+plt.savefig("graph.png")
 plt.show()
 
 df.to_csv("spotify_dataset_clean.csv", index=False)
