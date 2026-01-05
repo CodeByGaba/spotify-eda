@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
 
 
 """
@@ -36,5 +37,40 @@ plt.xlabel('Churned (1 = Yes, 0 = No)')
 plt.ylabel('Number of Users')
 plt.savefig("graph.png")
 plt.show()
+
+"""
+Exploratory Data Analysis
+-Compared churned vs non-churned users
+-Analyze listening behavior
+"""
+
+df.groupby("churned").mean(numeric_only=True)
+pd.crosstab(["subscription_type"], df["churned"])
+
+#Avg daily minutes vs churn
+#Churn distribution
+
+os.makedirs("images", exist_ok=True)
+plt.figure()
+df["churned"].value_counts().plot(kind="bar")
+plt.title('Churn Distribution')
+plt.xlabel("Churned")
+plt.ylabel("Number of Users")
+plt.savefig("images/churn_distribution.png")
+plt.close()
+
+#listening time vs churn
+plt.figure()
+df.boxplot(column="avg_daily_minutes", by="churned")
+plt.title("Listening Time vs Churn")
+plt.suptitle("")
+plt.savefig("images/listening_time_vs_churn.png")
+plt.close()
+
+"""
+Insight:
+Churned users spend way less time listening per day,
+indicating lower engagement before churn.
+"""
 
 df.to_csv("spotify_dataset_clean.csv", index=False)
