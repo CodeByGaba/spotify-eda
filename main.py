@@ -13,7 +13,7 @@ Data Understanding & Cleaning
 - Checked column names and data types
 - Checked for missing values
 - Count of churn vs active values
-- Visualise churn
+- Visualize churn
 - Save cleaned dataset
 """
 
@@ -66,11 +66,80 @@ plt.title("Listening Time vs Churn")
 plt.suptitle("")
 plt.savefig("images/listening_time_vs_churn.png")
 plt.close()
+#Insight: Churned users spend way less time listening per day
 
 """
-Insight:
-Churned users spend way less time listening per day,
-indicating lower engagement before churn.
+Engagement Analysis: Listening Time vs Subscription Type 
+-Compared average daily listening time between FREE and PREMIUM users
+-Assessed whether paid users show higher engagement
+-Used a boxplot to visualise differences in listening behavior
+-Identified engagement patterns that may influence churn
 """
+plt.figure()
+df.boxplot(column="avg_daily_minutes", by="subscription_type")
+plt.title("Listening Time by Subscription Type")
+plt.suptitle("")
+plt.xlabel("Subscription Type")
+plt.ylabel("Average Daily Minutes")
+plt.savefig("images/listening_time_by_subscription.png")
+plt.close()
+#Insight: Premium users listen more than free users, suggestion that paying users are more engaged and less likely to churn.
+
+
+
+"""
+Engagement Analysis: Playlists vs Listening Time
+-Examined the relationship between number of playlists and listening time
+-Used playlists as a proxy for personalization and user investment
+-Visualized engagement differences using a boxplot
+-Observed how higher personalization relates to stronger engagement
+"""
+plt.figure()
+df.boxplot(column="avg_daily_minutes", by="number_of_playlists")
+plt.title("Listening Time by Number of Playlists")
+plt.suptitle("")
+plt.xlabel('Number of Playlists')
+plt.ylabel("Average Daily Minutes")
+plt.savefig("images/listening_time_by_playlists.png")
+plt.close()
+#Insight: Users who create more playlists tend to listen more, indicating stronger engagement and retention.
+
+
+"""
+Engagement Analysis: Skips vs Listening Time
+-Analyzed how skipping behavior relates to listening time
+-Used skips per day as an indicator of content dissatisfaction
+-Visualized engagement differences across skip levels
+-Identified behavioral patterns associated with potential churn
+"""
+plt.figure()
+df.boxplot(column="avg_daily_minutes", by="skips_per_day")
+plt.title("Listening Time by Skips Per Day")
+plt.suptitle("")
+plt.xlabel("Skips Per Day")
+plt.ylabel("Average Daily Minutes")
+plt.savefig("images/listening_time_by_skips.png")
+plt.close()
+#Insight: Users who skip songs frequently spend less time listening overall, showing lower engagement.
+
+
+"""
+Engagement Analysis: Genre vs Engagement
+-Compared average listening time across top music genres
+-Evaluated whether certain genres drive higher user engagement
+-Used a bar chart to highlight genre-based engagement differences
+-Identified content categories with stronger retention potential
+"""
+plt.figure()
+df.groupby("top_genre")["avg_daily_minutes"].mean().sort_values().plot(kind="bar")
+plt.title("Average Listening Time by Top Genre")
+plt.xlabel("Genre")
+plt.ylabel("Average Daily Minutes")
+plt.tight_layout()
+plt.savefig("images/listening_time_genre.png")
+plt.close()
+#Insight: Some genres have higher listening time, showing content preference affects engagement.
+
+
 
 df.to_csv("spotify_dataset_clean.csv", index=False)
