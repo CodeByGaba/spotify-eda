@@ -141,5 +141,76 @@ plt.close()
 #Insight: Some genres have higher listening time, showing content preference affects engagement.
 
 
+"""
+Churn Analysis: Listening Time vs Churn
+- Compared listening time between churned and active users
+- Assessed whether lower engagement is linked to churn
+- Used a boxplot to visualize differences
+"""
+plt.figure()
+df.boxplot(column="avg_daily_minutes", by="churned")
+plt.title("Listening Time by Churn Status")
+plt.suptitle("")
+plt.xlabel("Churned (0 = Active, 1 = Churned)")
+plt.ylabel("Average Daily Minutes")
+plt.savefig("images/listening_time_by_churn.png")
+plt.close()
+#Insight: Churned users listen significantly less than active users.
+
+"""
+Churn Analysis: Subscription Type vs Churn
+- Analyzed churn distribution across free and premium users
+- Identified which subscription type is more likely to churn
+"""
+plt.figure()
+pd.crosstab(df["subscription_type"], df["churned"]).plot(kind="bar")
+plt.title("Churn by Subscription Type")
+plt.xlabel("Subscription Type")
+plt.ylabel("User Count")
+plt.tight_layout()
+plt.savefig("images/churn_by_subscription.png")
+plt.close()
+#Insight: Free users churn more often than premium users.
+
+
+"""
+Churn Analysis: Skips vs Churn
+- Compared skipping behavior between churned and active users
+- Used skips as a proxy for dissatisfaction
+"""
+plt.figure()
+df.boxplot(column="skips_per_day", by="churned")
+plt.title("Skips per Day by Churn Status")
+plt.suptitle("")
+plt.xlabel("Churned (0 = Active, 1 = Churned)")
+plt.ylabel("Skips Per Day")
+plt.savefig("images/skips_by_churn.png")
+plt.close()
+#Insight: Churned users skip more songs, indicating lower satisfaction.
+
+
+"""
+Churn Analysis: Playlists vs Churn
+- Compared playlist creation between churned and active users
+- Used playlists as a measure of user investment
+"""
+plt.figure()
+df.boxplot(column="number_of_playlists", by="churned")
+plt.title("Playlists by Churn Status")
+plt.suptitle("")
+plt.xlabel("Churned (0 = Active, 1 = Churned)")
+plt.ylabel("Number of Playlists")
+plt.savefig("images/playlists_by_churn.png")
+plt.close()
+#Insight: Users with fewer playlists are more likely to churn.
+
+
+
+
+
+
+
+
+
 
 df.to_csv("spotify_dataset_clean.csv", index=False)
